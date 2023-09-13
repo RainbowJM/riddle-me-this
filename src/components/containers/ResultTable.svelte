@@ -1,4 +1,4 @@
-<script lang="ts">
+<script>
 	import Logo from '../images/Logo.svelte';
 
 	let data = [
