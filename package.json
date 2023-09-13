@@ -32,5 +32,8 @@
 		"vite": "^4.4.2"
 	},
 	"type": "module",
-	"dependencies": {}
+	"dependencies": {
+		"firebase": "9.0.0",
+		"sveltefire": "0.4.2"
+	}
 }
