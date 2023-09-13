@@ -1,14 +1,16 @@
 <script lang="ts">
+	import { goto } from "$app/navigation";
+	import { auth, googleSignInRedirect } from "$lib/firebase/auth";
+  import { userStore } from 'sveltefire';
+
   import Logo from "../images/Logo.svelte";
   import LoginButton from "../buttons/LoginButton.svelte"
-	import { goto } from "$app/navigation";
-  
-	// import FlatAlert from "../containers/FlatAlert.svelte";
-	// import LoginButton from "../buttons/LoginButton.svelte";
 
-  const login = () => {
-    goto("/home");
-  };
+  const user = userStore(auth);
+
+  const login = () => googleSignInRedirect();
+
+  const redirect = () => goto("/home");
 </script>
 
 <div class="flex flex-1 h-full min-w-full bg-surface">
@@ -20,10 +22,18 @@
     <div class="flex mt-20 md:ml-20 justify-center">
       <div class="card">
         <div class="card-body">
+          {#if $user}
+          <h2 class="card-title">Welcome back, {$user.displayName}</h2>
+          {:else}
           <h2 class="card-title">Welcome Please Login</h2>
+          {/if}
                 
-          <div class="card-actions mt-3">
+          <div class="card-actions mt-3 justify-center">
+          {#if $user}
+            <LoginButton on:click={redirect} />
+          {:else}
             <LoginButton on:click={login} />
+          {/if}
           </div>
         </div>
       </div>
