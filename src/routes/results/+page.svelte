@@ -1,1 +1,5 @@
-<h1>Result Page</h1>
+<script>
+    import ResultTable from "../../components/containers/ResultTable.svelte";
+</script>
+
+<ResultTable></ResultTable>
