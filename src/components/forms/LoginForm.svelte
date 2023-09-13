@@ -1,12 +1,13 @@
 <script lang="ts">
   import Logo from "../images/Logo.svelte";
   import LoginButton from "../buttons/LoginButton.svelte"
+	import { goto } from "$app/navigation";
   
 	// import FlatAlert from "../containers/FlatAlert.svelte";
 	// import LoginButton from "../buttons/LoginButton.svelte";
 
   const login = () => {
-    
+    goto("/home");
   };
 </script>
 
