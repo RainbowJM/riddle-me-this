@@ -11,8 +11,6 @@
 	export let form;
 
 	const user = userStore(auth);
-
-	let riddleQuestion = 'What is the name of the of the testing riddle?';
 </script>
 
 <svelte:head>
@@ -26,10 +24,10 @@
 	<SubmitButton />
 </RiddleForm>
 
-{#if form?.success}
+{#if form?.isCorrect == true }
 	<ShowConfetti />
 	<p class="text-lime-500 text-center">answer is correct</p>
 {/if}
-{#if form?.incorrect}
+{#if form?.isCorrect == false }
 	<p class="text-orange-500 text-center">answer is incorrect</p>
 {/if}

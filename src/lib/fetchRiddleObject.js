@@ -15,7 +15,7 @@ export default async () => {
       .then((res) => {
         if ((res.data.answer.match(/ /g) || []).length <= 1) {
           riddleObject.question = res.data.riddle;
-          riddleObject.answer = res.data.answer;
+          riddleObject.answer = res.data.answer.toLowerCase();
           retry = false
         }
       })
