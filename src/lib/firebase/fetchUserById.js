@@ -1,10 +1,10 @@
-import { db } from './firebase/app';
+import { db } from './app';
 import { collection, doc, setDoc, getDoc } from "firebase/firestore";
 
 /**
  * @param {string} uid
  */
-export default async function getPoints(uid) {
+export default async function (uid) {
     let user = {
         name: "",
         photo: "",
