@@ -69,7 +69,6 @@ export async function getPoints(id) {
         // docSnap.data() will be undefined in this case
         console.log("No such document!");
     }
-
 }
 /**
  * @param {string} id
