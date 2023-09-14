@@ -1,30 +1,36 @@
 import { db } from './app';
 import { collection, doc, setDoc, getDoc } from "firebase/firestore";
-const axios = require('axios').default;
+import axios from 'axios';
 
-function getRiddle() {
-    let riddle
+export async function getRiddleObject() {
+    let riddleObject = {
+        question: "",
+        answer: "",
+    };
+
     let retry = true
     while (retry) {
 
-        axios.get('https://riddles-api.vercel.app/random')
+        await axios.get('https://riddles-api.vercel.app/random')
             .then(function (res) {
-                console.log(res)
 
                 if ((res.data.answer.match(/ /g) || []).length <= 1) {
-                    riddle = res.data
+                    riddleObject.question = res.data?.riddle;
+                    riddleObject.answer = res.data?.answer;
+
                     retry = false
                 }
             }
             )
     }
-    return riddle
+
+    return riddleObject;
 }
 
 /**
  * @param {string | number} id
  */
-async function getWinPoints(id) {
+export async function getWinPoints(id) {
     let weekId = getWeekId()
     const docRef = doc(db, 'Scores', weekId);
     const docSnap = await getDoc(docRef);
@@ -53,7 +59,7 @@ async function getWinPoints(id) {
 /**
  * @param {string} id
  */
-async function getPoints(id) {
+export async function getPoints(id) {
     let weekId = getWeekId()
     const docRef = doc(db, 'Scores', weekId);
     const docSnap = await getDoc(docRef);
@@ -69,13 +75,13 @@ async function getPoints(id) {
  * @param {string} id
  * @param {number} points
  */
-async function setPoints(id, points) {
+export async function setPoints(id, points) {
     let weekId = getWeekId()
     const docRef = doc(db, 'Scores', weekId);
     await setDoc(docRef, { 'users': { id: points } }, { merge: true });
 }
 
-async function getTodayWinners() {
+export async function getTodayWinners() {
     let weekId = getWeekId()
     const docRef = doc(db, 'Scores', weekId);
     const docSnap = await getDoc(docRef);
@@ -122,3 +128,5 @@ function getWeekId() {
     let weekId = year.toString() + weekNumber.toString().padStart(2, '0')
     return weekId;
 }
+
+export default { getPoints };
