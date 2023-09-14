@@ -2,6 +2,12 @@ import { db } from './app';
 import { collection, doc, setDoc, getDoc } from "firebase/firestore";
 import axios from 'axios';
 
+var WeekObject = {
+    Daily: [],
+    users: {},
+    weekly: []
+}
+
 export async function getRiddleObject() {
     let riddleObject = {
         question: "",
@@ -48,8 +54,8 @@ export async function getWinPoints(id) {
         console.log("creating document");
         let obj = new Map()
         obj.set(id, 5)
-        winnersToday = [obj,]
-        await setDoc(docRef, { 'users': obj }, { merge: true })
+        winnersToday = obj
+        await setDoc(docRef, { 'users': { id } }, { merge: true })
     }
     await setDoc(docRef, { 'daily': winnersToday }, { merge: true })
     console.log("Document data:", winnersToday);
