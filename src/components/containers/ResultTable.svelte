@@ -55,7 +55,7 @@
 .animate-gradient {
   background: linear-gradient(90deg, #ff69b4, #800080); 
   background-size: 200% 100%;
-  animation: gradientAnimation 3s infinite alternate;
+  animation: gradientAnimation 1s infinite alternate;
 }
 
 </style>
