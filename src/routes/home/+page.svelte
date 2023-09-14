@@ -22,6 +22,7 @@
 <RiddleForm>
 	<h1 class="text-2xl text-center">{data.question}</h1>
 	<TextInput placeholder="Write your answer" name={'answer'} />
+	
 	<SubmitButton />
 </RiddleForm>
 
