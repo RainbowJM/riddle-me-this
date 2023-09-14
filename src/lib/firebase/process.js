@@ -25,11 +25,11 @@ function getRiddle() {
  * @param {string} id
  */
 async function getPoints(id) {
-
-    const docRef = doc(db, id, "SF");
+    let weekId = getWeekid()
+    const docRef = doc(db, 'Scores', weekId);
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
-        console.log("Document data:", docSnap.data());
+        console.log("Document data:", docSnap.data().users[id]);
     } else {
         // docSnap.data() will be undefined in this case
         console.log("No such document!");
@@ -51,7 +51,7 @@ async function getTodayWinners() {
     const docRef = doc(db, 'Scores', weekId);
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
-        console.log("Document data:", docSnap.data());
+        console.log("Document data:", docSnap.data().Daily);
     } else {
         // docSnap.data() will be undefined in this case
         console.log("No such document!");
