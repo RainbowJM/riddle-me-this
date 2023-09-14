@@ -18,43 +18,44 @@
 	<Logo />
 </div>
 
-{#each data as item (item.id)}
-	<div class="card card-side bg-base-100 shadow-xl">
-		<figure><img src="/logo.png" alt="Movie" /></figure>
-		<div class="card-body">
-			<h2 class="card-title">{item.id}</h2>
-			<p>{item.name}</p>
-			<div class="point-bar" style="width: {calculatePointBarWidth(item.points)}" />
-			{item.points}
+<div class="flex flex-col justify-center">
+	{#each data as item (item.id)}
+		<div class="card card-side m-5 bg-base-100 shadow-2xl">
+			<figure><img src="/logo.png" alt="Movie" /></figure>
+			<div class="card-body">
+				<p>{item.name}</p>
+				<section>
+					<div class="h-4 animate-gradient" style="width: {calculatePointBarWidth(item.points)}" />
+          <div>{item.points} points</div>
+				</section>
+			</div>
 		</div>
-	</div>
-  <br>
-{/each}
+		<br />
+	{/each}
+</div>
 
 <style>
-	/* You can add CSS styles for your table here */
-	table {
-		width: 100%;
-		border-collapse: collapse;
+	figure {
+		margin: 0;
 	}
 
-	th,
-	td {
-		border: 1px solid #ddd;
-		padding: 8px;
-		text-align: left;
+	.card {
+		width: 50em;
 	}
 
-	th {
-		background-color: #f2f2f2;
-	}
+@keyframes gradientAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
 
-	tr:hover {
-		background-color: #f5f5f5;
-	}
+.animate-gradient {
+  background: linear-gradient(90deg, #ff69b4, #800080); 
+  background-size: 200% 100%;
+  animation: gradientAnimation 3s infinite alternate;
+}
 
-	.point-bar {
-		height: 10px;
-		background-color: #007bff;
-	}
 </style>
