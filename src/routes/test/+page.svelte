@@ -3,7 +3,7 @@
 	import { onMount } from 'svelte';
 
 	onMount(async () => {
+		console.log('testing....');
 		let usr = await fetchUserById('TEMPUSR');
-		console.log(usr);
 	});
 </script>

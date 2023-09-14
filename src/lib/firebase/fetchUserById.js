@@ -13,7 +13,7 @@ export default async function (uid) {
     const docRef = doc(db, 'Users', uid);
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
-        user.name = docSnap.data().Displayname
+        user.name = docSnap.data().DisplayName
         user.email = docSnap.data().Email
         user.photo = docSnap.data().Photo
 
