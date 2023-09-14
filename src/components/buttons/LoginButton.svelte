@@ -1,6 +1,7 @@
 <script>
+  // @ts-ignore
+  import IconLogin from "~icons/mdi/login";
 	import { createEventDispatcher } from "svelte";
-  import IconLogin from "~icons/mdi/logout";
 
   const dispatch = createEventDispatcher();
   const click = () => dispatch('click');
