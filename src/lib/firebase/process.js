@@ -38,7 +38,7 @@ export async function getRiddleObject() {
  */
 export async function getWinPoints(id) {
     let weekId = getWeekId()
-    const docRef = doc(db, 'Scores', weekId);
+    const docRef = doc(db, 'Score', weekId);
     const docSnap = await getDoc(docRef);
     let points
     let winnersToday
@@ -51,7 +51,7 @@ export async function getWinPoints(id) {
     } else {
         // docSnap.data() will be undefined in this case
         console.log("No such document!");
-        console.log("creating document");
+        console.log("Creating document");
         let obj = new Map()
         obj.set(id, 5)
         winnersToday = obj
@@ -67,7 +67,7 @@ export async function getWinPoints(id) {
  */
 export async function getPoints(id) {
     let weekId = getWeekId()
-    const docRef = doc(db, 'Scores', weekId);
+    const docRef = doc(db, 'Score', weekId);
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
         console.log("Document data:", docSnap.data().users[id]);
@@ -82,17 +82,21 @@ export async function getPoints(id) {
  */
 export async function setPoints(id, points) {
     let weekId = getWeekId()
-    const docRef = doc(db, 'Scores', weekId);
+    const docRef = doc(db, 'Score', weekId);
     await setDoc(docRef, { 'users': { id: points } }, { merge: true });
 }
 
 export async function getTodayWinners() {
     let weekId = getWeekId()
-    const docRef = doc(db, 'Scores', weekId);
+    const docRef = doc(db, 'Score', weekId,);
     const docSnap = await getDoc(docRef);
-    let winnersToday = null
+    let winnersToday = {}
     if (docSnap.exists()) {
-        winnersToday = docSnap.data().Daily
+        let daily = docSnap.get('Daily')
+        if (daily != undefined) {
+            winnersToday = docSnap.data().Daily[new Date().getDay()]
+        }
+        else winnersToday = {}
         console.log("Document data:", winnersToday);
     } else {
         // docSnap.data() will be undefined in this case
@@ -103,7 +107,7 @@ export async function getTodayWinners() {
 
 async function getWeekWinners() {
     let weekId = getWeekId()
-    const docRef = doc(db, 'Scores', weekId,);
+    const docRef = doc(db, 'Score', weekId,);
     let winnersWeek = null
     const docSnap = await getDoc(docRef);
 
@@ -128,9 +132,8 @@ function getWeekId() {
     var weekNumber = Math.ceil(days / 7);
 
     // Display the calculated result      
-    console.log("Week number of " + date +
-        " is :   " + weekNumber);
     let weekId = year.toString() + weekNumber.toString().padStart(2, '0')
+    console.log("WeekId is " + weekId);
     return weekId;
 }
 
