@@ -29,8 +29,9 @@ async function getWinPoints(id) {
     const docRef = doc(db, 'Scores', weekId);
     const docSnap = await getDoc(docRef);
     let points
+    let winnersToday
     if (docSnap.exists()) {
-        let winnersToday = docSnap.data().Daily
+        winnersToday = docSnap.data().Daily
         points = 5 - winnersToday.length()
         points = (points < 0) ? 0 : points
 
@@ -41,8 +42,12 @@ async function getWinPoints(id) {
         console.log("creating document");
         let obj = new Map()
         obj.set(id, 5)
+        winnersToday = [obj,]
         await setDoc(docRef, { 'users': obj }, { merge: true })
     }
+    await setDoc(docRef, { 'daily': winnersToday }, { merge: true })
+    console.log("Document data:", winnersToday);
+
 
 }
 /**
