@@ -28,9 +28,15 @@ export const actions = {
     console.log(userAnswer);
     console.log(correctAnswer);
     if (userAnswer === correctAnswer) {
-      return { isCorrect: true };
+      return {
+        isCorrect: true,
+        answer: correctAnswer,
+      };
     } else {
-      return { isCorrect: false };
+      return {
+        isCorrect: false,
+        answer: correctAnswer,
+      };
     }
   },
 };
