@@ -1,5 +1,5 @@
 import { db } from './app';
-import { collection, doc, setDoc, getDoc } from "firebase/firestore";
+import { collection, doc, setDoc, getDoc, arrayUnion } from "firebase/firestore";
 import axios from 'axios';
 
 var WeekObject = {
@@ -36,55 +36,51 @@ export async function getRiddleObject() {
 /**
  * @param {string | number} id
  */
-export async function getWinPoints(id) {
+export async function getPointsOnWinAndSave(id) {
     let weekId = getWeekId()
     const docRef = doc(db, 'Score', weekId);
     const docSnap = await getDoc(docRef);
     let points
-    let winnersToday
-    if (docSnap.exists()) {
-        winnersToday = docSnap.data().Daily
-        points = 5 - winnersToday.length()
-        points = (points < 0) ? 0 : points
 
-
+    if (docSnap.exists() && docSnap.get('daily') != undefined) {
+        let winnersToday = docSnap.get('daily')
+        console.log(winnersToday)
+        points = 5 - winnersToday.length
+        if (points < 0) points = 0
     } else {
         // docSnap.data() will be undefined in this case
         console.log("No such document!");
         console.log("Creating document");
-        let obj = new Map()
-        obj.set(id, 5)
-        winnersToday = obj
-        await setDoc(docRef, { 'users': { id } }, { merge: true })
+        points = 5
     }
-    await setDoc(docRef, { 'daily': winnersToday }, { merge: true })
-    console.log("Document data:", winnersToday);
-
-
+    // shouldn't be a problem since normally this is only called once a day per user
+    //else might have to restructure how this is saved in firestore
+    await setDoc(docRef, { daily: arrayUnion({ [id]: points }) }, { merge: true, })
+    return points
 }
-/**
- * @param {string} id
- */
-export async function getPoints(id) {
-    let weekId = getWeekId()
-    const docRef = doc(db, 'Score', weekId);
-    const docSnap = await getDoc(docRef);
-    if (docSnap.exists()) {
-        console.log("Document data:", docSnap.data().users[id]);
-    } else {
-        // docSnap.data() will be undefined in this case
-        console.log("No such document!");
-    }
-}
-/**
- * @param {string} id
- * @param {number} points
- */
-export async function setPoints(id, points) {
-    let weekId = getWeekId()
-    const docRef = doc(db, 'Score', weekId);
-    await setDoc(docRef, { 'users': { id: points } }, { merge: true });
-}
+// /**
+//  * @param {string} id
+//  */
+// export async function getPoints(id) {
+//     let weekId = getWeekId()
+//     const docRef = doc(db, 'Score', weekId);
+//     const docSnap = await getDoc(docRef);
+//     if (docSnap.exists()) {
+//         console.log("Document data:", docSnap.data().users[id]);
+//     } else {
+//         // docSnap.data() will be undefined in this case
+//         console.log("No such document!");
+//     }
+// }
+// /**
+//  * @param {string} id
+//  * @param {number} points
+//  */
+// export async function setPoints(id, points) {
+//     let weekId = getWeekId()
+//     const docRef = doc(db, 'Score', weekId);
+//     await setDoc(docRef, { 'users': { [id]: points } }, { merge: true });
+// }
 
 export async function getTodayWinners() {
     let weekId = getWeekId()
@@ -94,7 +90,7 @@ export async function getTodayWinners() {
     if (docSnap.exists()) {
         let daily = docSnap.get('Daily')
         if (daily != undefined) {
-            winnersToday = docSnap.data().Daily[new Date().getDay()]
+            winnersToday = daily[new Date().getDay()]
         }
         else winnersToday = {}
         console.log("Document data:", winnersToday);
@@ -108,16 +104,20 @@ export async function getTodayWinners() {
 async function getWeekWinners() {
     let weekId = getWeekId()
     const docRef = doc(db, 'Score', weekId,);
-    let winnersWeek = null
+    let winnersWeek = []
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
-        winnersWeek = docSnap.data().weekly
+        let weekly = docSnap.get('weekly')
+        if (weekly != undefined) {
+            winnersWeek = weekly
+        }
         console.log("Document data:", winnersWeek);
     } else {
         // docSnap.data() will be undefined in this case
         console.log("No such document!");
     }
+    return winnersWeek
 }
 
 function getWeekId() {
@@ -137,4 +137,4 @@ function getWeekId() {
     return weekId;
 }
 
-export default { getPoints };
+export default { getWinPoints: getPointsOnWinAndSave };
