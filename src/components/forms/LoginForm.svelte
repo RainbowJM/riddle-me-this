@@ -13,7 +13,7 @@
   const redirect = () => goto("/home");
 </script>
 
-<div class="flex flex-1 h-full min-w-full bg-surface">
+<div class="flex flex-1 min-w-full bg-surface">
   <div class="flex-1 flex flex-col">
     <div class="flex mt-16 md:ml-20 justify-center">
       <Logo />

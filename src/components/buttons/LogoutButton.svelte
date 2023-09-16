@@ -1,5 +1,4 @@
 <script>
-  // @ts-ignore
   import IconLogout from "~icons/mdi/logout";
 	import { createEventDispatcher } from "svelte";
 

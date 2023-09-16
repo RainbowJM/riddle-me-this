@@ -1,4 +1,4 @@
-import { db } from './app';
+import { firestore } from './app';
 import { collection, doc, setDoc, getDoc, arrayUnion } from "firebase/firestore";
 import axios from 'axios';
 
@@ -8,37 +8,12 @@ var WeekObject = {
     weekly: []
 }
 
-export async function getRiddleObject() {
-    let riddleObject = {
-        question: "",
-        answer: "",
-    };
-
-    let retry = true
-    while (retry) {
-
-        await axios.get('https://riddles-api.vercel.app/random')
-            .then(function (res) {
-
-                if ((res.data.answer.match(/ /g) || []).length <= 1) {
-                    riddleObject.question = res.data?.riddle;
-                    riddleObject.answer = res.data?.answer;
-
-                    retry = false
-                }
-            }
-            )
-    }
-
-    return riddleObject;
-}
-
 /**
  * @param {string | number} id
  */
 export async function getPointsOnWinAndSave(id) {
     let weekId = getWeekId()
-    const docRef = doc(db, 'Score', weekId);
+    const docRef = doc(firestore, 'Score', weekId);
     const docSnap = await getDoc(docRef);
     let points
 
@@ -63,7 +38,7 @@ export async function getPointsOnWinAndSave(id) {
 //  */
 // export async function getPoints(id) {
 //     let weekId = getWeekId()
-//     const docRef = doc(db, 'Score', weekId);
+//     const docRef = doc(firestore, 'Score', weekId);
 //     const docSnap = await getDoc(docRef);
 //     if (docSnap.exists()) {
 //         console.log("Document data:", docSnap.data().users[id]);
@@ -78,13 +53,13 @@ export async function getPointsOnWinAndSave(id) {
 //  */
 // export async function setPoints(id, points) {
 //     let weekId = getWeekId()
-//     const docRef = doc(db, 'Score', weekId);
+//     const docRef = doc(firestore, 'Score', weekId);
 //     await setDoc(docRef, { 'users': { [id]: points } }, { merge: true });
 // }
 
 export async function getTodayWinners() {
     let weekId = getWeekId()
-    const docRef = doc(db, 'Score', weekId,);
+    const docRef = doc(firestore, 'Score', weekId,);
     const docSnap = await getDoc(docRef);
     let winnersToday = {}
     if (docSnap.exists()) {
@@ -103,7 +78,7 @@ export async function getTodayWinners() {
 
 async function getWeekWinners() {
     let weekId = getWeekId()
-    const docRef = doc(db, 'Score', weekId,);
+    const docRef = doc(firestore, 'Score', weekId,);
     let winnersWeek = []
     const docSnap = await getDoc(docRef);
 

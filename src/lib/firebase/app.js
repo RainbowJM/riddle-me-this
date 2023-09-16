@@ -10,7 +10,7 @@ import {
 } from '$env/static/public';
 
 import { initializeApp } from 'firebase/app';
-// import { getDatabase } from 'firebase/database';
+import { getDatabase } from 'firebase/database';
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
@@ -24,6 +24,17 @@ const firebaseConfig = {
 	measurementId: PUBLIC_MEASUREMENT_ID,
 };
 
-// Initialize Firebase App and Database
+/**
+ * Initialized firebase instance
+ */
 export const app = initializeApp(firebaseConfig);
-export const db = getFirestore(app);
+
+/**
+ * Initialized firebase Real-Time Database instance
+ */
+export const db = getDatabase(app);
+
+/**
+ * Initialized firebase Firestore instance
+ */
+export const firestore = getFirestore(app);

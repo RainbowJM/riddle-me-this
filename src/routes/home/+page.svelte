@@ -1,17 +1,13 @@
 <script>
-	import { userStore } from 'sveltefire';
-	import { auth } from '$lib/firebase/auth';
-
+	import TopBar from '../../components/containers/TopBar.svelte';
+	import FlatAlert from '../../components/containers/FlatAlert.svelte';
 	import SubmitButton from '../../components/buttons/SubmitButton.svelte';
 	import RiddleForm from '../../components/forms/RiddleForm.svelte';
 	import TextInput from '../../components/inputs/TextInput.svelte';
 	import ShowConfetti from '../../components/animation/ShowConfetti.svelte';
-	import TopBar from '../../components/containers/TopBar.svelte';
 
 	export let data;
 	export let form;
-
-	const user = userStore(auth);
 </script>
 
 <svelte:head>
@@ -19,6 +15,7 @@
 </svelte:head>
 
 <TopBar />
+<FlatAlert />
 
 <RiddleForm>
 	<h1 class="text-2xl text-center">{data.question}</h1>
@@ -41,3 +38,4 @@
 		<span>The correct answer was: </span><span class="font-bold text-primary">"{form?.correctAnswer}"</span>
 	</p>
 {/if}
+
