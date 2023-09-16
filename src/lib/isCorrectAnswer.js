@@ -10,7 +10,7 @@ export default (userAnswer, correctAnswer) => {
   if (!userAnswer || !correctAnswer) return false;
 
   // False if answer is too short
-  if (userAnswer.length < 4) return false;
+  if (userAnswer.length < 3) return false;
 
   // True if correct answer contains userAnswer
   if (correctAnswer.includes(userAnswer)) return true;

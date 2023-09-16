@@ -8,6 +8,9 @@
 
 	import LogoutButton from "../buttons/LogoutButton.svelte";
 	import Logo from "../images/Logo.svelte";
+	import ResultsButton from "../buttons/ResultsButton.svelte";
+	import { page } from "$app/stores";
+	import HomeButton from "../buttons/HomeButton.svelte";
 
   let firstName = "";
   let localeTime = "";
@@ -15,6 +18,8 @@
 
   const user = userStore(auth);
   user.subscribe(state => firstName = state?.displayName || "");
+
+  page.subscribe(state => console.log(JSON.stringify(state.route.id)))
 
   onMount(() => {
     const today = new Date();
@@ -34,10 +39,12 @@
     }
   });
 
+  const gotoHomePage = () => goto('/home');
+  const gotoResultPage = () => goto('/results');
   const logout = () => googleSignOut().then(() => goto('/'));
 </script>
 
-<MediaQuery query="(max-width: 600px)" let:matches>
+<MediaQuery query="(max-width: 1000px)" let:matches>
   {#if matches}
      <div class="navbar flex-1 flex-col p-10 gap-8">
         <div class="flex-1 flex w-full justify-between">
@@ -46,7 +53,13 @@
             <Logo />
           </div>
           <!-- Actions -->
-          <div class="">
+          <div class="flex-none gap-2">
+            {#if $page.route.id !== "/home"}
+            <HomeButton on:click={gotoHomePage} />
+            {/if}
+            {#if $page.route.id === "/home"}
+            <ResultsButton on:click={gotoResultPage} />
+            {/if}
             <LogoutButton on:click={logout} />
           </div>
         </div>
@@ -71,7 +84,8 @@
       </div>
 
       <!-- Actions -->
-      <div class="flex-none">
+      <div class="flex-none gap-2">
+        <ResultsButton on:click={gotoResultPage} />
         <LogoutButton on:click={logout} />
       </div>
     </div>
