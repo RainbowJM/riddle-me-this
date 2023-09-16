@@ -19,15 +19,22 @@
 
 <RiddleForm>
 	<h1 class="text-2xl text-center">{data.question}</h1>
-	<TextInput placeholder="Write your answer" name={'answer'} />
+	<TextInput placeholder="Write your answer" name="answer" />
 	
 	<SubmitButton />
 </RiddleForm>
 
 {#if form?.isCorrect == true }
 	<ShowConfetti />
-	<p class="text-lime-500 text-center">answer is correct</p>
+	<p class="text-success text-center">
+		<span>Your answer: </span><span class="font-bold text-accent">"{form?.userAnswer}" </span><span>is correct!</span>
+	</p>
 {/if}
 {#if form?.isCorrect == false }
-	<p class="text-orange-500 text-center">answer is incorrect</p>
+	<p class="text-secondary text-center">
+		<span>Your answer: </span><span class="font-bold text-error">"{form?.userAnswer}" </span><span>is wrong</span>
+	</p>
+	<p class="text-secondary text-center">
+		<span>The correct answer was: </span><span class="font-bold text-primary">"{form?.correctAnswer}"</span>
+	</p>
 {/if}

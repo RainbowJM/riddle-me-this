@@ -1,5 +1,6 @@
 import { decrypt, encrypt } from '$lib/encryptor.js';
 import fetchRiddleObject from '$lib/fetchRiddleObject.js';
+import isCorrectAnswer from '$lib/isCorrectAnswer';
 
 /** @type {import('./$types').PageServerLoad} */
 export const load = ({ cookies }) =>
@@ -9,7 +10,7 @@ export const load = ({ cookies }) =>
     cookies.set("cypher", answerCypher);
 
     // Send the question to the client
-    return { question }
+    return { question };
   });
 
 
@@ -27,16 +28,10 @@ export const actions = {
     // Compare the user's answer to the correct answer
     console.log(userAnswer);
     console.log(correctAnswer);
-    if (userAnswer === correctAnswer) {
-      return {
-        isCorrect: true,
-        answer: correctAnswer,
-      };
-    } else {
-      return {
-        isCorrect: false,
-        answer: correctAnswer,
-      };
-    }
+    return {
+      isCorrect: isCorrectAnswer(userAnswer, correctAnswer),
+      userAnswer,
+      correctAnswer,
+    };
   },
 };

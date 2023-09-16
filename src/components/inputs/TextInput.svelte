@@ -7,6 +7,7 @@
   export let placeholder = "";
   export let value = "";
   export let ref = null;
+  export let disabled = false;
 
   const enter = () => dispatch('enter');
 </script>
@@ -21,5 +22,6 @@
     bind:value
     on:keyup={(event) => event.key === 'Enter' && enter()}
     bind:this={ref}
+    {disabled}
   />
 </div>
