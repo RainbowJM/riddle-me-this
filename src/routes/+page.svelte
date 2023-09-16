@@ -15,6 +15,7 @@
 				.then(() => {
 					alertTypeState.set("");
 					alertTextState.set("Your account information has been stored in the database");
+					document.cookie = `uid=${user.uid}`;
 					goto("/home");
 				})
 				.catch((err) => {

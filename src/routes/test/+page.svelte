@@ -4,6 +4,7 @@
 	import { collection, doc, onSnapshot } from "firebase/firestore";
 	import { firestore } from '$lib/firebase/app';
 	import { watchFirestoreUsers, type UserFormat, userListState } from '../../store/users';
+	import { setTodayStandings } from '../../store/standings';
 
 	let unSubDoc = () => {};
 	let unSubCol = () => {};
@@ -13,7 +14,7 @@
 		console.log('testing....');
 		// unSubDoc = onSnapshot(doc(firestore, "Users", "TEMPUSR"), (doc) => console.log("Current data: ", doc.data()));
 
-		unSubCol = watchFirestoreUsers()
+		setTodayStandings("da80jkzjt9SUXFpO8bb0WTcOdTH2").then(standings => console.log(standings))
 	});
 
 	onDestroy(() => unSubDoc());

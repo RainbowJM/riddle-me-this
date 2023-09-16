@@ -1,5 +1,5 @@
 import { firestore } from '$lib/firebase/app';
-import { collection, onSnapshot } from 'firebase/firestore';
+import { collection, doc, getDoc, onSnapshot } from 'firebase/firestore';
 import { writable, type Writable } from 'svelte/store';
 
 const initialUserListState: UserFormat[] = [];
@@ -21,11 +21,22 @@ export const watchFirestoreUsers = () =>
 	});
 
 /**
+ * Retreives the `UserFormat` from Firestore for the given uid
+ *
+ * @param uid the userId of the user
+ */
+export const fetchUserByUid = (uid: string) =>
+	getDoc(doc(firestore, 'Users', uid)).then((snapshot) => {
+		if (snapshot.exists()) return snapshot.data() as UserFormat;
+		else return {} as UserFormat;
+	});
+
+/**
  * Firestore format for the User Document Fields
  */
 export type UserFormat = {
 	uid: string;
 	displayName: string;
 	email: string;
-	photo: string;
+	photoURL: string;
 };

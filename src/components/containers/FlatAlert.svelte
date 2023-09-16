@@ -22,7 +22,7 @@
 </script>
 
 {#if type === "info" && text}
-<div class="flex-1 flex m-6">
+<div class="flex-1 flex m-5">
   <div class="alert alert-info flex-1 flex justify-between">
     <IconInformation />
     
@@ -35,7 +35,7 @@
 </div>
 
 {:else if type === "success" && text}
-<div class="flex-1 flex m-6">
+<div class="flex-1 flex m-5">
   <div class="alert alert-success flex-1 flex justify-between">
     <IconCheckDecagram />
     
@@ -48,7 +48,7 @@
 </div>
 
 {:else if type === "warning" && text}
-<div class="flex-1 flex m-6">
+<div class="flex-1 flex m-5">
   <div class="alert alert-warning flex-1 flex justify-between">
     <IconAlert />
     
@@ -61,7 +61,7 @@
 </div>
 
 {:else if type === "error" && text}
-<div class="flex-1 flex m-6">
+<div class="flex-1 flex m-5">
   <div class="alert alert-error flex-1 flex justify-between">
     <IconCloseOctagon />
     
@@ -74,7 +74,7 @@
 </div>
 
 {:else if text}
-<div class="flex-1 flex m-6">
+<div class="flex-1 flex m-5">
   <div class="alert flex-1 flex justify-between">
     <IconChatQuestion />
     

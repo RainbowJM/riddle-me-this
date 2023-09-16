@@ -37,6 +37,7 @@
 		"axios": "^1.5.0",
 		"cryptr": "6.3.0",
 		"firebase": "9.0.0",
+		"moment": "2.29.4",
 		"sveltefire": "0.4.2"
 	}
 }

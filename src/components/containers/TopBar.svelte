@@ -12,14 +12,12 @@
 	import { page } from "$app/stores";
 	import HomeButton from "../buttons/HomeButton.svelte";
 
-  let firstName = "";
+  let displayName = "";
   let localeTime = "";
   let greeting = "Hello";
 
   const user = userStore(auth);
-  user.subscribe(state => firstName = state?.displayName || "");
-
-  page.subscribe(state => console.log(JSON.stringify(state.route.id)))
+  user.subscribe(state => displayName = state?.displayName || "");
 
   onMount(() => {
     const today = new Date();
@@ -28,13 +26,13 @@
 
     switch (true) {
       case currentHour >= 0 && currentHour < 12:
-        greeting = `Good Morning, ${firstName}! 👋`;
+        greeting = `Good Morning, ${displayName}! 👋`;
         break;
       case currentHour >= 12 && currentHour < 18:
-        greeting = `Good Afternoon, ${firstName}! 👋`;
+        greeting = `Good Afternoon, ${displayName}! 👋`;
         break;    
       default:
-        greeting = `Good Evening ${firstName}! 👋`;
+        greeting = `Good Evening ${displayName}! 👋`;
         break;
     }
   });
@@ -46,7 +44,7 @@
 
 <MediaQuery query="(max-width: 1000px)" let:matches>
   {#if matches}
-     <div class="navbar flex-1 flex-col p-10 gap-8">
+     <div class="navbar flex-1 flex-col p-6 gap-8">
         <div class="flex-1 flex w-full justify-between">
           <!-- Logo -->
           <div class="w-28 mx-6">
