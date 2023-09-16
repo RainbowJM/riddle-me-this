@@ -6,6 +6,7 @@
 	import RiddleForm from '../../components/forms/RiddleForm.svelte';
 	import TextInput from '../../components/inputs/TextInput.svelte';
 	import ShowConfetti from '../../components/animation/ShowConfetti.svelte';
+	import TopBar from '../../components/containers/TopBar.svelte';
 
 	export let data;
 	export let form;
@@ -16,6 +17,8 @@
 <svelte:head>
 	<title>Home</title>
 </svelte:head>
+
+<TopBar />
 
 <RiddleForm>
 	<h1 class="text-2xl text-center">{data.question}</h1>
