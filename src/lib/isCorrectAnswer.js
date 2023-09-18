@@ -13,8 +13,11 @@ export default (userAnswer, correctAnswer) => {
   if (userAnswer.length < 3 && correctAnswer.length >= 3) return false;
 
   // True if correct answer contains userAnswer
-
-  if (correctAnswer.match(`(the |a |an | )(${userAnswer})(!|\\?)*/gi`)) return true;
+  let test;
+  let reg = new RegExp(`(the |a |an |)(${userAnswer})(!|\\?)*`, 'gi')
+  console.log(reg)
+  if (test = correctAnswer.match(reg)) return true;
+  console.log('test:', test)
   // False in any other scenario
   return false;
 }

@@ -15,7 +15,7 @@ export default async () => {
     question: "",
     answer: "",
   };
-  
+
   // Loop through fetch calls to find max two word answers
   let isRiddleFound = false;
   while (!isRiddleFound) {
@@ -24,6 +24,7 @@ export default async () => {
         if ((res.data.answer.match(/ /g) || []).length <= 1 && res.data.riddle.length < 200) {
           riddleObject.question = res.data.riddle;
           riddleObject.answer = res.data.answer.toLowerCase();
+          console.log(riddleObject.answer)
           isRiddleFound = true;
         }
       })
