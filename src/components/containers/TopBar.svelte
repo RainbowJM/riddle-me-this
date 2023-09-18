@@ -5,11 +5,11 @@
 	import { goto } from "$app/navigation";
 	import { auth, googleSignOut } from "$lib/firebase/auth";
 	import { userStore } from "sveltefire";
+	import { page } from "$app/stores";
 
 	import LogoutButton from "../buttons/LogoutButton.svelte";
 	import Logo from "../images/Logo.svelte";
 	import ResultsButton from "../buttons/ResultsButton.svelte";
-	import { page } from "$app/stores";
 	import HomeButton from "../buttons/HomeButton.svelte";
 
   let displayName = "";

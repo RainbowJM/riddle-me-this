@@ -17,7 +17,10 @@
 
 	let winners: AllWinnerFormat = {};
 
-	onMount(() => allWinnerState.subscribe((state) => winners = state));
+	onMount(() => allWinnerState.subscribe((state) => {
+		console.log(state);
+		winners = state;
+	}));
 </script>
 
 <div class="flex justify-center">
