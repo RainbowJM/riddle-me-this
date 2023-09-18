@@ -21,7 +21,7 @@ export default async () => {
   while (!isRiddleFound) {
     await axios.get(PUBLIC_RIDDLE_API_URL)
       .then((res) => {
-        if ((res.data.answer.match(/ /g) || []).length <= 1 && res.data.riddle.length < 100) {
+        if ((res.data.answer.match(/ /g) || []).length <= 1 && res.data.riddle.length < 200) {
           riddleObject.question = res.data.riddle;
           riddleObject.answer = res.data.answer.toLowerCase();
           isRiddleFound = true;
