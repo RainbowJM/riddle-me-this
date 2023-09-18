@@ -83,7 +83,12 @@
 
       <!-- Actions -->
       <div class="flex-none gap-2">
+        {#if $page.route.id !== "/home"}
+        <HomeButton on:click={gotoHomePage} />
+        {/if}
+        {#if $page.route.id === "/home"}
         <ResultsButton on:click={gotoResultPage} />
+        {/if}
         <LogoutButton on:click={logout} />
       </div>
     </div>
