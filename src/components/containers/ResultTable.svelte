@@ -1,5 +1,7 @@
-<script>
+<script lang="ts">
+	import { onMount } from 'svelte';
 	import Logo from '../images/Logo.svelte';
+	import { allWinnerState, type AllWinnerFormat } from '../../store/standings';
 
 	let data = [
 		{ id: 1, name: 'John', points: 20 },
@@ -9,10 +11,13 @@
 		{ id: 5, name: 'Bob', points: 5 }
 	];
 
-  // @ts-ignore
-	function calculatePointBarWidth(points) {
+	function calculatePointBarWidth(points: number) {
 		return (points / 25) * 100 + '%';
 	}
+
+	let winners: AllWinnerFormat = {};
+
+	onMount(() => allWinnerState.subscribe((state) => winners = state));
 </script>
 
 <div class="flex justify-center">
