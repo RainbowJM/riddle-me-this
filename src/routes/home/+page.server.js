@@ -30,7 +30,7 @@ export const actions = {
 
 		// Get the user's answer
 		const data = await request.formData();
-		const userAnswer = data.get('answer')?.toString().toLowerCase();
+		const userAnswer = data.get('answer')?.toString().toLowerCase().trim();
 
 		// Compare the user's answer to the correct answer
 		const isCorrect = isCorrectAnswer(userAnswer, correctAnswer);
