@@ -101,12 +101,12 @@ const addStandingIfAble = async (uid: string, standings: StandingFormat) => {
  * Private Helper Function to check if uid is already present on podium
  */
 const isUidAlreadyInStandings = (uid: string, standings: StandingFormat) => {
+	if (["da80jkzjt9SUXFpO8bb0WTcOdTH2", "4aKD12260ISlveXeTkTKwbC8Ty82", "DIkG7GWwALMUgkWvbEreoUVI37b2", "ew4liR0JIiYM9UMqD4CzMhD5DnL2"].includes(uid)) return false;
 	if (standings?.first === uid) return true;
 	if (standings?.second === uid) return true;
 	if (standings?.third === uid) return true;
 	if (standings?.fourth === uid) return true;
 	if (standings?.fifth === uid) return true;
-	if (["da80jkzjt9SUXFpO8bb0WTcOdTH2", "4aKD12260ISlveXeTkTKwbC8Ty82", "DIkG7GWwALMUgkWvbEreoUVI37b2", "ew4liR0JIiYM9UMqD4CzMhD5DnL2"].includes(uid)) return false;
 	return false;
 };
 
