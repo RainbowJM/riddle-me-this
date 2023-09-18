@@ -3,12 +3,13 @@ import { firestore } from '$lib/firebase/app';
 import { collection, doc, getDoc, onSnapshot, setDoc, updateDoc } from 'firebase/firestore';
 import { writable, type Writable } from 'svelte/store';
 import { fetchUserByUid } from './users';
-import { getAuthUserInfo } from '$lib/firebase/auth';
 
 const initialStandingListState: StandingFormat[] = [];
+const initialAllWinnerState: AllWinnerFormat = {};
 const initialTodayWinnerListState: DayWinnerFormat[] = [];
 
 export const standingListState: Writable<StandingFormat[]> = writable(initialStandingListState);
+export const allWinnerState: Writable<AllWinnerFormat> = writable(initialAllWinnerState);
 export const todayWinnerListState: Writable<DayWinnerFormat[]> = writable(
 	initialTodayWinnerListState
 );
@@ -20,9 +21,12 @@ export const todayWinnerListState: Writable<DayWinnerFormat[]> = writable(
  */
 export const watchFirestoreStandings = () =>
 	onSnapshot(collection(firestore, 'Standings'), (snapShot) => {
-		const userArray: StandingFormat[] = [];
-		snapShot.forEach((doc) => userArray.push(doc.data() as StandingFormat));
-		standingListState.set(userArray);
+		const allWinners: AllWinnerFormat = {};
+		snapShot.forEach((doc) => {
+			const standings = doc.data() as StandingFormat;
+			buildWinnersList(standings).then((winners) => (allWinners[doc.id] = winners));
+		});
+		allWinnerState.set(allWinners);
 	});
 
 /**
@@ -129,7 +133,7 @@ export type StandingFormat = {
 };
 
 /**
- * Firestore format for the User Document Fields
+ * Firestore format for the Daily winner fields
  */
 export type DayWinnerFormat = {
 	uid: string;
@@ -138,4 +142,11 @@ export type DayWinnerFormat = {
 	photoURL: string;
 	place: string;
 	score: number;
+};
+
+/**
+ * Application format for the object containing all the Daily winner fields
+ */
+export type AllWinnerFormat = {
+	[key: string]: DayWinnerFormat[];
 };
