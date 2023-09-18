@@ -84,11 +84,26 @@ const addStandingIfAble = async (uid: string, standings: StandingFormat) => {
 	const todayStandingsRef = doc(firestore, 'Standings', moment().format('YYYY-MM-DD'));
 
 	if (!standings) return setDoc(todayStandingsRef, { first: uid });
+	if (isUidAlreadyInStandings(uid, standings)) return;
+
 	if (!standings.first) return setDoc(todayStandingsRef, { first: uid });
 	if (!standings.second) return updateDoc(todayStandingsRef, { second: uid });
 	if (!standings.third) return updateDoc(todayStandingsRef, { third: uid });
 	if (!standings.fourth) return updateDoc(todayStandingsRef, { fourth: uid });
 	if (!standings.fifth) return updateDoc(todayStandingsRef, { fifth: uid });
+};
+
+/**
+ * Private Helper Function to check if uid is already present on podium
+ */
+const isUidAlreadyInStandings = (uid: string, standings: StandingFormat) => {
+	if (standings?.first === uid) return true;
+	if (standings?.second === uid) return true;
+	if (standings?.third === uid) return true;
+	if (standings?.fourth === uid) return true;
+	if (standings?.fifth === uid) return true;
+
+	return false;
 };
 
 /**
