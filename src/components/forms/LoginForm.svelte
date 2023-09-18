@@ -1,14 +1,16 @@
 <script lang="ts">
 	import { goto } from "$app/navigation";
-	import { auth, googleSignInRedirect } from "$lib/firebase/auth";
+	import { auth, googleSignInPopup, googleSignInRedirect } from "$lib/firebase/auth";
   import { userStore } from 'sveltefire';
 
   import Logo from "../images/Logo.svelte";
   import LoginButton from "../buttons/LoginButton.svelte"
+	import LoginTroubleButton from "../buttons/LoginTroubleButton.svelte";
 
   const user = userStore(auth);
 
   const login = () => googleSignInRedirect();
+  const loginPopup = () => googleSignInPopup();
 
   const redirect = () => goto("/home");
 </script>
@@ -32,7 +34,10 @@
           {#if $user}
             <LoginButton on:click={redirect} />
           {:else}
+          <div class="flex-1 flex flex-col gap-80">
             <LoginButton on:click={login} />
+            <LoginTroubleButton on:click={loginPopup} />
+          </div>
           {/if}
           </div>
         </div>

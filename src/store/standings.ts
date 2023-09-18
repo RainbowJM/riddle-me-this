@@ -57,23 +57,23 @@ export const setTodayStandings = (uid: string) =>
 const buildWinnersList = async (standings: StandingFormat) => {
 	const winnersList: DayWinnerFormat[] = [];
 
-	if (standings.first) {
+	if (standings?.first) {
 		const firstUser = await fetchUserByUid(standings.first);
 		winnersList.push({ ...firstUser, ...dayScoreBreakdown.first });
 	}
-	if (standings.second) {
+	if (standings?.second) {
 		const secondUser = await fetchUserByUid(standings.second);
 		winnersList.push({ ...secondUser, ...dayScoreBreakdown.second });
 	}
-	if (standings.third) {
+	if (standings?.third) {
 		const thirdUser = await fetchUserByUid(standings.third);
 		winnersList.push({ ...thirdUser, ...dayScoreBreakdown.third });
 	}
-	if (standings.fourth) {
+	if (standings?.fourth) {
 		const fourthUser = await fetchUserByUid(standings.fourth);
 		winnersList.push({ ...fourthUser, ...dayScoreBreakdown.fourth });
 	}
-	if (standings.fifth) {
+	if (standings?.fifth) {
 		const fifthUser = await fetchUserByUid(standings.fifth);
 		winnersList.push({ ...fifthUser, ...dayScoreBreakdown.fifth });
 	}
