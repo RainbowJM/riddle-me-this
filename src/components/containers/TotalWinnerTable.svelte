@@ -1,12 +1,62 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import IconChartBar from '~icons/mdi/chart-bar';
 	import Avatar from './Avatar.svelte';
-	import type { DayWinnerFormat } from '../../store/standings';
+	import { allWinnerState, type DayWinnerFormat } from '../../store/standings';
 
-	export let winner: DayWinnerFormat[] = [];
 	export let dayDate: string = '';
 
+	let dayWinner: DayWinnerFormat[] = [];
+	let winners;
+	let scoreSumByName;
+	let userArray: [] = [];
+    let dataArray: [] = [];
+
+	onMount(() =>
+        
+		allWinnerState.subscribe((state) => {
+			winners = state;
+			if (state[dayDate]) dayWinner = state[dayDate];
+			scoreSumByName = sumScoresByName(winners);
+
+            console.log('scoreSumByName', scoreSumByName);
+            
+			for (const key in scoreSumByName) {
+				if (scoreSumByName.hasOwnProperty(key)) {
+					dataArray.push({ name: key, score: scoreSumByName[key] });
+				}
+			}
+            userArray = dataArray;
+		})
+	);
+
 	const calculatePointBarWidth = (points: number) => (points / 25) * 100 + '%';
+
+	function sumScoresByName(data) {
+		const scoreSumByName = {};
+
+		for (const date in data) {
+			if (data.hasOwnProperty(date)) {
+				const objectsArray = data[date];
+				for (const obj of objectsArray) {
+					if (obj.hasOwnProperty('displayName') && obj.hasOwnProperty('score')) {
+						const { displayName, score, email } = obj;
+                        // console.log('email', email);
+                        
+						// console.log('name', displayName);
+						// console.log('score', score);
+						if (scoreSumByName.hasOwnProperty(displayName)) {
+							scoreSumByName[displayName] += score;
+						} else {
+							scoreSumByName[displayName] = score;
+						}
+					}
+				}
+			}
+		}
+
+		return scoreSumByName;
+	}
 </script>
 
 <div class="overflow-x-auto m-5 lg:flex">
@@ -27,26 +77,27 @@
 		</thead>
 
 		<tbody>
-			<div>hello {winner}</div>
-			{#each winner as user}
-				<div>hello {JSON.stringify(user)}</div>
-				<!-- <tr>
-        <td>
-          <div class="flex items-center space-x-3">
-            <Avatar photoURL={user.photoURL} displayName={user.displayName} />
-            <div>
-              <div class="font-bold">{user.displayName}</div>
-              <div class="text-sm opacity-50">{user.email}</div>
-            </div>
-          </div>
-        </td>
-        <td>
-          <div class="flex-1 flex flex-col">
-            <div class="h-4 rounded-md animate-gradient" style="width: {calculatePointBarWidth(user.score)}" />
-            <div>{user.score} points</div>
-          </div>
-        </td>
-      </tr> -->
+			{#each userArray as user}
+				<tr>
+					<td>
+						<div class="flex items-center space-x-3">
+							<Avatar photoURL={user.photoURL} displayName={user.displayName} />
+							<div>
+								<div class="font-bold">{user.name}</div>
+								<div class="text-sm opacity-50">{user.email}</div>
+							</div>
+						</div>
+					</td>
+					<td>
+						<div class="flex-1 flex flex-col">
+							<div
+								class="h-4 rounded-md animate-gradient"
+								style="width: {calculatePointBarWidth(user.score)}"
+							/>
+							<div>{user.score} points</div>
+						</div>
+					</td>
+				</tr>
 			{/each}
 		</tbody>
 	</table>
