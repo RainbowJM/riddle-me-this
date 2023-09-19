@@ -32,7 +32,6 @@
 			userArray.sort((a, b) => {
 				return b.score - a.score;
 			});
-			console.log(userArray);
 		})
 	);
 
