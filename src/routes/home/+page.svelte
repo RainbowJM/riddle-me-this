@@ -7,16 +7,27 @@
 	import StandingsTable from '../../components/containers/StandingsTable.svelte';
 	import { onDestroy, onMount } from 'svelte';
 	import { watchFirestoreUsers } from '../../store/users';
-	import { watchTodayStandings } from '../../store/standings';
+	import {
+		standingListState,
+		todayWinnerListState,
+		watchTodayStandings
+	} from '../../store/standings';
 
 	export let data;
 	export let form;
+	let state = 0;
 
 	let unWatchUsers = () => {};
 	let unWatchStandings = () => {};
 
 	onMount(() => (unWatchUsers = watchFirestoreUsers()));
 	onMount(() => (unWatchStandings = watchTodayStandings()));
+	onMount(() =>
+		todayWinnerListState.subscribe((list) => {
+			console.log(list);
+			state = list.length;
+		})
+	);
 
 	onDestroy(() => unWatchUsers());
 	onDestroy(() => unWatchStandings());
@@ -31,7 +42,7 @@
 		<h1 class="text-2xl text-center">{data.question}</h1>
 		<TextInput placeholder="Write your answer" name="answer" />
 
-		<SubmitButton disabled={form?.isCorrect} />
+		<SubmitButton disabled={state > 4} />
 
 		<div>
 			{#if form?.isCorrect == true}
