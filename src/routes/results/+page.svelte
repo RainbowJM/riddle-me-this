@@ -4,6 +4,7 @@
 	import Card from "../../components/containers/Card.svelte";
 
 	import { allWinnerState, watchFirestoreStandings, type DayWinnerFormat } from "../../store/standings";
+	import TotalWinnerTable from "../../components/containers/TotalWinnerTable.svelte";
 
   let monday: DayWinnerFormat[] = [];
 	let tuesday: DayWinnerFormat[] = [];
@@ -29,7 +30,7 @@
   <div class="divider mx-10 text-secondary">Totals</div>
   
   <Card>
-    <h1 class="m-10">** Under Construction **</h1>
+    <TotalWinnerTable />
   </Card>
 
   <div class="divider mx-10 text-secondary">Daily Winners</div>
