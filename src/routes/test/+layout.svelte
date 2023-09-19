@@ -6,7 +6,7 @@
 	import TopBar from "../../components/containers/TopBar.svelte";
 	import FlatAlert from "../../components/containers/FlatAlert.svelte";
 
-  onMount(() => userStore(auth).subscribe((user) => !user?.uid && goto("/")));
+  // onMount(() => userStore(auth).subscribe((user) => !user?.uid && goto("/")));
 </script>
 
 <TopBar />

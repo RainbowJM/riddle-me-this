@@ -35,18 +35,18 @@
   <div class="divider mx-10 text-secondary">Daily Winners</div>
   
   <Card>
-    <DayWinnerTable dayDate="2023-09-18" dayWinner={monday} />
+    <DayWinnerTable dayDate="2023-09-18" />
   </Card>
   <Card>
-    <DayWinnerTable dayDate="2023-09-19" dayWinner={tuesday} />
+    <DayWinnerTable dayDate="2023-09-19" />
   </Card>
   <Card>
-    <DayWinnerTable dayDate="2023-09-20" dayWinner={wednesday} />
+    <DayWinnerTable dayDate="2023-09-20" />
   </Card>
   <Card>
-    <DayWinnerTable dayDate="2023-09-21" dayWinner={thursday} />
+    <DayWinnerTable dayDate="2023-09-21" />
   </Card>
   <Card>
-    <DayWinnerTable dayDate="2023-09-22" dayWinner={friday} />
+    <DayWinnerTable dayDate="2023-09-22" />
   </Card>
 </div>

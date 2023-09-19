@@ -1,10 +1,17 @@
 <script lang="ts">
+	import { onMount } from "svelte";
   import IconChartBar from "~icons/mdi/chart-bar";
 	import Avatar from "./Avatar.svelte";
-	import type { DayWinnerFormat } from "../../store/standings";
 
-  export let dayWinner: DayWinnerFormat[] = [];
+	import { allWinnerState, type DayWinnerFormat } from "../../store/standings";
+
   export let dayDate: string = "";
+
+  let dayWinner: DayWinnerFormat[] = [];
+  
+	onMount(() => allWinnerState.subscribe((state) => {
+    if (state[dayDate]) dayWinner = state[dayDate];
+	}));
 
   const calculatePointBarWidth = (points: number) => ((points / 25) * 100 + '%');
 </script>
@@ -27,7 +34,7 @@
     </thead>
 
     <tbody>
-      {#each dayWinner as user}
+      {#each dayWinner as user (user.uid)}
       <tr>
         <td>
           <div class="flex items-center space-x-3">
