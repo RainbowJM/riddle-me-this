@@ -8,8 +8,6 @@
 
   let unSubscribeFromStandingsWatcher = () => {};
 
-  console.log('allWinnerState page', $allWinnerState);
-
   onMount(() => unSubscribeFromStandingsWatcher = watchFirestoreStandings());
   onDestroy(() => unSubscribeFromStandingsWatcher());
 </script>

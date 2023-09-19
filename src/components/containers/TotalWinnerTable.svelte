@@ -10,27 +10,25 @@
 	let winners;
 	let scoreSumByName;
 	let userArray: [] = [];
-    let dataArray: [] = [];
+	let dataArray: [] = [];
 
 	onMount(() =>
-        
 		allWinnerState.subscribe((state) => {
 			winners = state;
 			if (state[dayDate]) dayWinner = state[dayDate];
 			scoreSumByName = sumScoresByName(winners);
 
-            console.log('scoreSumByName', scoreSumByName);
-            
 			for (const key in scoreSumByName) {
 				if (scoreSumByName.hasOwnProperty(key)) {
-					dataArray.push({ name: key, score: scoreSumByName[key] });
+					dataArray.push({ name: key, score: scoreSumByName[key].score, photoURL: scoreSumByName[key].photoURL, email: scoreSumByName[key].email });
 				}
 			}
-            userArray = dataArray;
+			userArray = dataArray;
+            console.log(userArray)
 		})
 	);
 
-	const calculatePointBarWidth = (points: number) => (points / 25) * 100 + '%';
+	const calculatePointBarWidth = (points: number) => (points / 125) * 100 + '%';
 
 	function sumScoresByName(data) {
 		const scoreSumByName = {};
@@ -39,16 +37,17 @@
 			if (data.hasOwnProperty(date)) {
 				const objectsArray = data[date];
 				for (const obj of objectsArray) {
-					if (obj.hasOwnProperty('displayName') && obj.hasOwnProperty('score')) {
-						const { displayName, score, email } = obj;
-                        // console.log('email', email);
-                        
-						// console.log('name', displayName);
-						// console.log('score', score);
+					if (
+						obj.hasOwnProperty('displayName') &&
+						obj.hasOwnProperty('score') &&
+						obj.hasOwnProperty('email') &&
+						obj.hasOwnProperty('photoURL')
+					) {
+						const { displayName, score, email, photoURL } = obj;
 						if (scoreSumByName.hasOwnProperty(displayName)) {
-							scoreSumByName[displayName] += score;
+							scoreSumByName[displayName].score += score;
 						} else {
-							scoreSumByName[displayName] = score;
+							scoreSumByName[displayName] = { photoURL: photoURL, email: email, score: score };
 						}
 					}
 				}
@@ -63,7 +62,7 @@
 	<div class="flex-1 flex gap-2 mt-1 mb-3">
 		<IconChartBar />
 		<h1 class="text-lg">
-			<span>Winners</span>
+			<span>Ranking</span>
 		</h1>
 	</div>
 
@@ -77,7 +76,8 @@
 		</thead>
 
 		<tbody>
-			{#each userArray as user}
+			{#each userArray as user, i}
+                <!-- {#if i < 3} -->
 				<tr>
 					<td>
 						<div class="flex items-center space-x-3">
@@ -98,6 +98,7 @@
 						</div>
 					</td>
 				</tr>
+                <!-- {/if} -->
 			{/each}
 		</tbody>
 	</table>
