@@ -20,11 +20,19 @@
 
 			for (const key in scoreSumByName) {
 				if (scoreSumByName.hasOwnProperty(key)) {
-					dataArray.push({ name: key, score: scoreSumByName[key].score, photoURL: scoreSumByName[key].photoURL, email: scoreSumByName[key].email });
+					dataArray.push({
+						name: key,
+						score: scoreSumByName[key].score,
+						photoURL: scoreSumByName[key].photoURL,
+						email: scoreSumByName[key].email
+					});
 				}
 			}
 			userArray = dataArray;
-            console.log(userArray)
+			userArray.sort((a, b) => {
+				return b.score - a.score;
+			});
+			console.log(userArray);
 		})
 	);
 
@@ -77,7 +85,7 @@
 
 		<tbody>
 			{#each userArray as user, i}
-                <!-- {#if i < 3} -->
+				<!-- {#if i < 3} -->
 				<tr>
 					<td>
 						<div class="flex items-center space-x-3">
@@ -98,7 +106,7 @@
 						</div>
 					</td>
 				</tr>
-                <!-- {/if} -->
+				<!-- {/if} -->
 			{/each}
 		</tbody>
 	</table>
