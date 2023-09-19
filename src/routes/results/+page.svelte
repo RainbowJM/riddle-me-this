@@ -3,26 +3,12 @@
 	import DayWinnerTable from "../../components/containers/DayWinnerTable.svelte";
 	import Card from "../../components/containers/Card.svelte";
 
-	import { allWinnerState, watchFirestoreStandings, type DayWinnerFormat } from "../../store/standings";
+	import { watchFirestoreStandings } from "../../store/standings";
 
-  let monday: DayWinnerFormat[] = [];
-	let tuesday: DayWinnerFormat[] = [];
-	let wednesday: DayWinnerFormat[] = [];
-	let thursday: DayWinnerFormat[] = [];
-	let friday: DayWinnerFormat[] = [];
+  let unSubscribeFromStandingsWatcher = () => {};
 
-  let unsub = () => {};
-  onMount(() => unsub = watchFirestoreStandings());
-  
-	onMount(() => allWinnerState.subscribe((state) => {
-    if (state["2023-09-18"]) monday = state["2023-09-18"];
-		if (state["2023-09-19"]) tuesday = state["2023-09-19"];
-		if (state["2023-09-20"]) wednesday = state["2023-09-20"];
-		if (state["2023-09-21"]) thursday = state["2023-09-21"];
-		if (state["2023-09-22"]) friday = state["2023-09-22"];
-	}));
-  
-  onDestroy(() => unsub());
+  onMount(() => unSubscribeFromStandingsWatcher = watchFirestoreStandings());
+  onDestroy(() => unSubscribeFromStandingsWatcher());
 </script>
 
 <div class="flex-1 flex flex-col">
