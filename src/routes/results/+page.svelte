@@ -3,7 +3,8 @@
 	import DayWinnerTable from "../../components/containers/DayWinnerTable.svelte";
 	import Card from "../../components/containers/Card.svelte";
 
-	import { watchFirestoreStandings } from "../../store/standings";
+	import { allWinnerState, watchFirestoreStandings, type DayWinnerFormat } from "../../store/standings";
+	import TotalWinnerTable from "../../components/containers/TotalWinnerTable.svelte";
 
   let unSubscribeFromStandingsWatcher = () => {};
 
@@ -15,7 +16,7 @@
   <div class="divider mx-10 text-secondary">Totals</div>
   
   <Card>
-    <h1 class="m-10">** Under Construction **</h1>
+    <TotalWinnerTable />
   </Card>
 
   <div class="divider mx-10 text-secondary">Daily Winners</div>
